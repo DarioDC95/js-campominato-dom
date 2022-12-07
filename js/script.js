@@ -76,27 +76,27 @@ button_play.addEventListener('click', function(){
                     }
                 }
                 document.getElementById('card-result').innerText = `Mi dispiace, hai perso, il tuo punteggio è: ${squareArrayNotBombs.length}`;
-                console.log(squareArrayNotBombs)
+                console.log(squareArrayNotBombs);
             }
 
             else {
                 // aggiungere il background azzurro quando clicco sul quadrato non bomba
-                this.classList.toggle('lightblue');
+                this.classList.add('lightblue');
                 console.log(this.innerText);
-
-                // creo un array di non bombe
-                squareArrayNotBombs.push(this);
 
                 // aggiungo la condizione di vittoria e blocco l'interazione con le celle
                 if (squareArrayNotBombs.length == (n_celle - 16)){
                     for (let i = 0; i < n_celle; i++) {
                         squareArray[i].classList.add('pointer-event-none');
                     }
+                    
                     document.getElementById('card-result').innerText = `Congratulazioni, hai completato tutte le celle.`;
                 }              
             }
 
-        })
+            // creo un array di non bombe
+            squareArrayNotBombs.push(divSquare.classList.contains('lightblue'));
+        },{once: `true`})
 
         // aggiungere la classe con la dimensione giusta in base alla difficoltà
         switch (difficultySelected) {
@@ -118,7 +118,7 @@ button_play.addEventListener('click', function(){
         }
 
         // incollo il quadrato nel suo container
-        containerSquare.append(divSquare);
+        containerSquare.appendChild(divSquare);
     }
 
     // creo un array con tutte le classi square
