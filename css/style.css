@@ -122,6 +122,14 @@ main .square.lightblue {
     background-color: lightskyblue;
 }
 
+main .square.red {
+    background-color: red;
+}
+
+.pointer-event-none {
+    pointer-events: none;
+}
+
 /* fondo della pagina */
 footer {
     height: 80px;
