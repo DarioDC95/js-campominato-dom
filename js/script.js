@@ -124,5 +124,4 @@ button_play.addEventListener('click', function(){
     // creo un array con tutte le classi square
     let squareArray = document.getElementsByClassName('square');
     console.log(squareArray);
-
 })
