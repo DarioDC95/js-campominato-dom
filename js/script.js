@@ -27,6 +27,7 @@ button_play.addEventListener('click', function(){
     // cancella l'eventuale tabella già creata
     let containerSquare = document.getElementById('container-div');
     containerSquare.innerHTML = "";
+    document.getElementById('card-result').innerText = ``;
 
     // dichiaro alcune variabili fuori dal for
     let divSquare;
