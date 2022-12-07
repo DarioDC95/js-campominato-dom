@@ -47,6 +47,10 @@ button_play.addEventListener('click', function(){
         case 'hard':
             n_celle = 49;
             break;
+        
+        default :
+            n_celle = 100;
+            break;
     }
 
     // creo un arrey di bombe
@@ -106,6 +110,10 @@ button_play.addEventListener('click', function(){
     
             case 'hard':
                 divSquare.classList.add('hard-size');
+                break;
+
+            default :
+                divSquare.classList.add('easy-size');
                 break;
         }
 
