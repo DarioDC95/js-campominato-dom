@@ -35,14 +35,18 @@ button_play.addEventListener('click', function(){
     let difficultySelected = document.getElementById('difficulty').value;
 
     // decido quanti quadrati fare in base alla difficoltà
-    if (difficultySelected === 'easy') {
-        n_celle = 100;
-    }
-    else if (difficultySelected === 'normal') {
-        n_celle = 81;
-    }
-    else {
-        n_celle = 49;
+    switch (difficultySelected) {
+        case 'easy':
+            n_celle = 100;
+            break;
+        
+        case 'normal':
+            n_celle = 81;
+            break;
+
+        case 'hard':
+            n_celle = 49;
+            break;
     }
 
     // creo un arrey di bombe
@@ -91,14 +95,18 @@ button_play.addEventListener('click', function(){
         })
 
         // aggiungere la classe con la dimensione giusta in base alla difficoltà
-        if (difficultySelected === 'easy') {
-            divSquare.classList.add('hard-size');
-        }
-        else if (difficultySelected === 'normal') {
-            divSquare.classList.add('normal-size');
-        }
-        else {
-            divSquare.classList.add('easy-size');
+        switch (difficultySelected) {
+            case 'easy':
+                divSquare.classList.add('easy-size');
+                break;
+            
+            case 'normal':
+                divSquare.classList.add('normal-size');
+                break;
+    
+            case 'hard':
+                divSquare.classList.add('hard-size');
+                break;
         }
 
         // incollo il quadrato nel suo container
