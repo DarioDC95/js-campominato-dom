@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    /* box-shadow: 0px 0px 0px 1px red inset; */
+}
+
+/* testa della pagina */
+header {
+    height: 100px;
+    padding: 0 10px;
+}
+
+header .container {
+    height: 100%;
+}
+
+header .row {
+    height: 100%;
+    display: flex;
+}
+
+header .col-left, header .col-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+
+img {
+    width: 80px;
+}
+
+h1 {
+    font-size: 45px;
+}
+
+header .card {
+    display: flex;
+    align-items: center;
+}
+
+header .col-right {
+    justify-content: flex-end;
+}
+
+.font-size-md {
+    font-size: 15px;
+}
+
+.font-size-lg {
+    font-size: 18px;
+}
+
+.form-select {
+    margin-right: 20px;
+}
+
+select {
+    padding: 3.9px 30px 3.9px 0px;
+    border-radius: 10px;
+    margin-right: 20px;
+    border: 1px solid #afafb9;
+    background-color: #e9e9ed;
+    cursor: pointer;
+}
+
+button {
+    padding: 5px 30px;
+    border-radius: 10px;
+    margin-right: 20px;
+    border: 1px solid #afafb9;
+    background-color: #e9e9ed;
+    cursor: pointer;
+}
+
+button:active {
+    border: 1px solid #9096a5;
+    background-color: #9ba4bea6;
+}
+
+/* corpo della pagina */
+main {
+    height: calc(100vh - 180px);
+    padding: 50px 0;
+    background-color: #7fffd4;
+    overflow-y: auto;
+}
+
+main .card {
+    width: 680px;
+    height: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hard-size {
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+
+.normal-size {
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+
+.easy-size {
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+
+main .square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+main .square.lightblue {
+    background-color: lightskyblue;
+}
+
+/* fondo della pagina */
+footer {
+    height: 80px;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+}
