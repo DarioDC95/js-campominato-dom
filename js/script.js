@@ -48,6 +48,9 @@ button_play.addEventListener('click', function(){
     let bombs = arrayRandomNumber(1, n_celle);
     console.log(bombs);
 
+    // dichiaro l'arrey di non bombe
+    let squareArrayNotBombs = [];
+
     // richiamo la funzione e incollo i div nel contenitore
     for (let i = 1; i <= n_celle; i++) {
         divSquare = createSquare(i);
@@ -55,7 +58,7 @@ button_play.addEventListener('click', function(){
         // Aggiungo il addEventListener al quadrato
         divSquare.addEventListener('click', function(){
 
-            // aggiungo la possibilità del quadrato bomba e li coloro tutti di rosso se premuto
+            // aggiungo la possibilità del quadrato bomba e li coloro tutti di rosso se premuto, in più blocco l'interazione con le celle
             if (bombs.includes(parseInt(this.innerText))) {
                 for (let i = 0; i < n_celle; i++) {
                     squareArray[i].classList.add('pointer-event-none');
@@ -63,6 +66,8 @@ button_play.addEventListener('click', function(){
                         squareArray[i].classList.add('red');
                     }
                 }
+                document.getElementById('card-result').innerText = `Mi dispiace, hai perso, il tuo punteggio è: ${squareArrayNotBombs.length}`;
+                console.log(squareArrayNotBombs)
             }
 
             else {
@@ -71,21 +76,15 @@ button_play.addEventListener('click', function(){
                 console.log(this.innerText);
 
                 // creo un array di non bombe
-                let squareArrayNotBombs = [];
+                squareArrayNotBombs.push(this);
 
-                for (let i = 0; i < n_celle; i++) {
-                    if (squareArray[i].classList.contains('lightblue')) {
-                        squareArrayNotBombs.push(squareArray[i]);
-                    }
-                }
-                console.log(squareArrayNotBombs)
-
+                // aggiungo la condizione di vittoria e blocco l'interazione con le celle
                 if (squareArrayNotBombs.length == (n_celle - 16)){
                     for (let i = 0; i < n_celle; i++) {
                         squareArray[i].classList.add('pointer-event-none');
                     }
-                }
-                
+                    document.getElementById('card-result').innerText = `Congratulazioni, hai completato tutte le celle.`;
+                }              
             }
 
         })
