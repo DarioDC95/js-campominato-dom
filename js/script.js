@@ -53,14 +53,14 @@ button_play.addEventListener('click', function(){
             break;
     }
 
-    // creo un arrey di bombe
+    // creo un array di bombe
     let bombs = arrayRandomNumber(1, n_celle);
     console.log(bombs);
 
-    // dichiaro l'arrey di non bombe
+    // dichiaro l'array di non bombe
     let squareArrayNotBombs = [];
 
-    // richiamo la funzione e incollo i div nel contenitore
+    // richiamo la funzione per creare il quadrato
     for (let i = 1; i <= n_celle; i++) {
         divSquare = createSquare(i);
 
@@ -73,29 +73,30 @@ button_play.addEventListener('click', function(){
                     squareArray[i].classList.add('pointer-event-none');
                     if (bombs.includes(parseInt(squareArray[i].innerText))) {
                         squareArray[i].classList.add('red');
+                        squareArray[i].innerHTML = `<i class="fa-solid fa-bomb"></i>`;
+                        squareArray[i].style.fontSize = '25px';
                     }
                 }
                 document.getElementById('card-result').innerText = `Mi dispiace, hai perso, il tuo punteggio è: ${squareArrayNotBombs.length}`;
-                console.log(squareArrayNotBombs);
             }
 
             else {
-                // aggiungere il background azzurro quando clicco sul quadrato non bomba
+                // aggiungere il background azzurro e il fiore quando clicco sul quadrato NON bomba
                 this.classList.add('lightblue');
-                console.log(this.innerText);
+                this.innerHTML = `<i class="fa-solid fa-fan"></i>`;
+                this.style.fontSize = '25px'; 
+
+                // creo un array di non bombe
+                squareArrayNotBombs.push(divSquare.classList.contains('lightblue'));
 
                 // aggiungo la condizione di vittoria e blocco l'interazione con le celle
-                if (squareArrayNotBombs.length == (n_celle - 16)){
+                if (squareArrayNotBombs.length == (n_celle - bombs.length)) {
                     for (let i = 0; i < n_celle; i++) {
                         squareArray[i].classList.add('pointer-event-none');
                     }
-                    
-                    document.getElementById('card-result').innerText = `Congratulazioni, hai completato tutte le celle.`;
+                    document.getElementById('card-result').innerText = `Congratulazioni, hai evitato tutte le bombe!`;
                 }              
             }
-
-            // creo un array di non bombe
-            squareArrayNotBombs.push(divSquare.classList.contains('lightblue'));
         },{once: `true`})
 
         // aggiungere la classe con la dimensione giusta in base alla difficoltà
@@ -117,7 +118,7 @@ button_play.addEventListener('click', function(){
                 break;
         }
 
-        // incollo il quadrato nel suo container
+        // incollo il quadrato nel suo container/griglia
         containerSquare.appendChild(divSquare);
     }
 
