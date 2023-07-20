@@ -20,6 +20,118 @@ function arrayRandomNumber(min, max) {
     return array;
 }
 
+// PROVA: POSIZIONE
+function getPos(el) {
+    // yay readability
+    let lx = 0,
+        ly = 0
+        le = 0;
+        if(el != null) {
+
+            lx += el.offsetLeft; 
+            ly += el.offsetTop;
+            el = el.offsetParent;
+        }
+    return {x: lx, y: ly, le: el};
+}
+
+//PROVA: POSIZIONE QUADRATI NON BOMBA
+function getPosNotBombs(boom, n_cel, square, not_boom) {
+
+    let squareNum = Number(square.innerText);
+    let squareRoot = Math.sqrt(n_cel);
+    console.log(squareNum);
+    console.log(squareRoot);
+
+    let positionsNotBombs = {
+
+        top: false,
+        topLeft: false,
+        topRight: false,
+        left: false,
+        right: false,
+        bottom: false,
+        bottomLeft: false,
+        bottomRight: false
+    };
+    let top = squareNum - squareRoot;
+    let topLeft = squareNum - (squareRoot - 1);
+    let topRight = squareNum - (squareRoot + 1);
+    let left = squareNum - 1;
+    let right = squareNum + 1;
+    let bottomLeft = squareNum + (squareRoot - 1);
+    let bottom = squareNum + squareRoot;
+    let bottomRight = squareNum + (squareRoot + 1);
+
+    if(squareNum % squareRoot == 0) {
+        if(squareNum == squareRoot) {
+            console.log('primo if')
+            if(!boom.includes(left)) positionsNotBombs.left = true;
+            if(!boom.includes(bottomLeft)) positionsNotBombs.bottomLeft = true;
+            if(!boom.includes(bottom)) positionsNotBombs.bottom = true;
+        } else if(squareNum == n_cel) {
+            console.log('secondo if')
+            if(!boom.includes(left)) positionsNotBombs.left = true;
+            if(!boom.includes(topLeft)) positionsNotBombs.topLeft = true;
+            if(!boom.includes(top)) positionsNotBombs.top = true;
+        } else {
+            console.log('terzo if')
+            if(!boom.includes(top)) positionsNotBombs.top = true;
+            if(!boom.includes(topLeft)) positionsNotBombs.topLeft = true;
+            if(!boom.includes(left)) positionsNotBombs.left = true;
+            if(!boom.includes(bottomLeft)) positionsNotBombs.bottomLeft = true;
+            if(!boom.includes(bottom)) positionsNotBombs.bottom = true;
+        }
+    } else if((squareNum - 1) % squareRoot == 0) {
+        if(squareNum - 1 == 0) {
+            console.log('quarto if')
+            if(!boom.includes(right)) positionsNotBombs.right = true;
+            if(!boom.includes(bottomRight)) positionsNotBombs.bottomRight = true;
+            if(!boom.includes(bottom)) positionsNotBombs.bottom = true;
+        } else if(squareNum + squareRoot > n_cel) {
+            console.log('quinto if')
+            if(!boom.includes(right)) positionsNotBombs.right = true;
+            if(!boom.includes(topRight)) positionsNotBombs.topRight = true;
+            if(!boom.includes(top)) positionsNotBombs.top = true;
+        } else {
+            console.log('sesto if')
+            if(!boom.includes(top)) positionsNotBombs.top = true;
+            if(!boom.includes(topRight)) positionsNotBombs.topRight = true;
+            if(!boom.includes(right)) positionsNotBombs.right = true;
+            if(!boom.includes(bottomRight)) positionsNotBombs.bottomRight = true;
+            if(!boom.includes(bottom)) positionsNotBombs.bottom = true;
+        }
+    } else {
+        if(squareNum - squareRoot < 0) {
+            console.log('settimo if')
+            if(!boom.includes(right)) positionsNotBombs.right = true;
+            if(!boom.includes(bottomRight)) positionsNotBombs.bottomRight = true;
+            if(!boom.includes(left)) positionsNotBombs.left = true;
+            if(!boom.includes(bottomLeft)) positionsNotBombs.bottomLeft = true;
+            if(!boom.includes(bottom)) positionsNotBombs.bottom = true;
+        } else if(squareNum + squareRoot > n_cel) {
+            console.log('ottavo if')
+            if(!boom.includes(right)) positionsNotBombs.right = true;
+            if(!boom.includes(topRight)) positionsNotBombs.topRight = true;
+            if(!boom.includes(left)) positionsNotBombs.left = true;
+            if(!boom.includes(topLeft)) positionsNotBombs.topLeft = true;
+            if(!boom.includes(top)) positionsNotBombs.top = true;
+        } else {
+            console.log('nono if')
+            if(!boom.includes(right)) positionsNotBombs.right = true;
+            if(!boom.includes(topRight)) positionsNotBombs.topRight = true;
+            if(!boom.includes(bottomRight)) positionsNotBombs.bottomRight = true;
+            if(!boom.includes(left)) positionsNotBombs.left = true;
+            if(!boom.includes(topLeft)) positionsNotBombs.topLeft = true;
+            if(!boom.includes(bottomLeft)) positionsNotBombs.bottomLeft = true;
+            if(!boom.includes(top)) positionsNotBombs.top = true;
+            if(!boom.includes(bottom)) positionsNotBombs.bottom = true;
+        }
+    }
+
+    return positionsNotBombs;
+}
+
 // funzione per la creazione della griglia con i quadrati
 function creationGrid(containerGrid, boom, n_cel, squareArrayNotBoom) {
 
@@ -44,14 +156,16 @@ function creationGrid(containerGrid, boom, n_cel, squareArrayNotBoom) {
             }
 
             else {
+                // creo un array di non bombe
+                squareArrayNotBoom.push(Number(this.innerHTML));
+
+                //PROVA: TROVA I QUADRATI VICINI
+                console.log(getPosNotBombs(boom, n_cel, this));
+
                 // aggiungere il background azzurro e il fiore quando clicco sul quadrato NON bomba
                 this.classList.add('lightblue');
                 this.innerHTML = `<i class="fa-solid fa-fan"></i>`;
                 this.style.fontSize = '25px'; 
-
-                // creo un array di non bombe
-                squareArrayNotBoom.push(this);
-                console.log(squareArrayNotBoom)
 
                 // aggiungo la condizione di vittoria e blocco l'interazione con le celle
                 if (squareArrayNotBoom.length == (n_cel - boom.length)) {
@@ -69,7 +183,6 @@ function creationGrid(containerGrid, boom, n_cel, squareArrayNotBoom) {
     
     // creo un array con tutte le classi square
     let squareArray = document.getElementsByClassName('square');
-    console.log(squareArray);
 }
 
 // COSTRUIAMO IL NOSTRO GIOCO
