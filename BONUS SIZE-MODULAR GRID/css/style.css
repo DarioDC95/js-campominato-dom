@@ -149,6 +149,11 @@ footer .card {
     align-items: center;
 }
 
+footer .card #card-hint {
+    flex-grow: 1;
+    text-align: end;
+}
+
 footer #card-result {
     font-size: 25px;
 }

@@ -25,6 +25,9 @@ function getPosNotBombs(boom, n_cel, square, not_boom) {
 
     let squareNum = Number(square.innerText);
     let squareRoot = Math.sqrt(n_cel);
+    console.log(squareNum);
+    console.log(squareRoot);
+    console.log(not_boom);
 
     let positionsNotBombs = {
 
@@ -38,8 +41,8 @@ function getPosNotBombs(boom, n_cel, square, not_boom) {
         bottomRight: false
     };
     let top = squareNum - squareRoot;
-    let topLeft = squareNum - (squareRoot - 1);
-    let topRight = squareNum - (squareRoot + 1);
+    let topLeft = squareNum - (squareRoot + 1);
+    let topRight = squareNum - (squareRoot - 1);
     let left = squareNum - 1;
     let right = squareNum + 1;
     let bottomLeft = squareNum + (squareRoot - 1);
@@ -115,6 +118,55 @@ function getPosNotBombs(boom, n_cel, square, not_boom) {
     return positionsNotBombs;
 }
 
+//PROVA: STAMPA INDIZIO
+function printHint(boom, n_cel, field, squareArrayNotBoom) {
+
+    let nearNotBombSquares = getPosNotBombs(boom, n_cel, field, squareArrayNotBoom);
+    console.log(nearNotBombSquares);
+    let cardHint = document.getElementById('card-hint');
+
+    if(nearNotBombSquares.top == true && nearNotBombSquares.topRight == true && nearNotBombSquares.topLeft == true) {
+
+        cardHint.innerText = `INDIZIO: In Alto ci sono tre caselle vuote`;
+    } else if((nearNotBombSquares.top == true && (nearNotBombSquares.topLeft == true || nearNotBombSquares.topRight == true)) || nearNotBombSquares.topRight == true && nearNotBombSquares.topLeft == true) {
+
+        cardHint.innerText = `INDIZIO: In Alto ci sono due caselle vuote`;
+    } else if(nearNotBombSquares.left == true && nearNotBombSquares.topLeft == true && nearNotBombSquares.bottomLeft == true) {
+
+        cardHint.innerText = `INDIZIO: A Sinistra ci sono tre caselle vuote`;
+    } else if((nearNotBombSquares.left == true && (nearNotBombSquares.topLeft == true || nearNotBombSquares.bottomLeft == true)) || nearNotBombSquares.topLeft == true && nearNotBombSquares.bottomLeft == true) {
+
+        cardHint.innerText = `INDIZIO: A Sinistra ci sono due caselle vuote`;
+    } else if(nearNotBombSquares.right == true && nearNotBombSquares.topRight == true && nearNotBombSquares.bottomRight == true) {
+
+        cardHint.innerText = `INDIZIO: A Destra ci sono tre caselle vuote`;
+    } else if((nearNotBombSquares.right == true && (nearNotBombSquares.topRight == true || nearNotBombSquares.bottomRight == true)) || nearNotBombSquares.topRight == true && nearNotBombSquares.bottomRight == true) {
+
+        cardHint.innerText = `INDIZIO: A Destra ci sono due caselle vuote`;
+    } else if(nearNotBombSquares.bottom == true && nearNotBombSquares.bottomLeft == true && nearNotBombSquares.bottomRight == true) {
+
+        cardHint.innerText = `INDIZIO: In Basso ci sono tre caselle vuote`;
+    } else if((nearNotBombSquares.bottom == true && (nearNotBombSquares.bottomLeft == true || nearNotBombSquares.bottomRight == true)) || nearNotBombSquares.bottomLeft == true && nearNotBombSquares.bottomRight == true) {
+
+        cardHint.innerText = `INDIZIO: In Basso ci sono due caselle vuote`;
+    } else if(nearNotBombSquares.top == true || nearNotBombSquares.topLeft == true || nearNotBombSquares.topRight == true) {
+
+        cardHint.innerText = `INDIZIO: In Alto c'è una casella vuota`;
+    } else if(nearNotBombSquares.left == true) {
+
+        cardHint.innerText = `INDIZIO: A Sinistra c'è una casella vuota`;
+    } else if(nearNotBombSquares.right == true) {
+
+        cardHint.innerText = `INDIZIO: A Destra c'è una casella vuota`;
+    } else if(nearNotBombSquares.bottom == true || nearNotBombSquares.bottomLeft == true || nearNotBombSquares.bottomRight == true) {
+
+        cardHint.innerText = `INDIZIO: In Basso c'è una casella vuota`;
+    } else {
+
+        cardHint.innerText = `INDIZIO: Non ci sono caselle vuote vicine`;
+    }
+}
+
 // funzione per la creazione della griglia con i quadrati
 function creationGrid(containerGrid, boom, n_cel, squareArrayNotBoom) {
 
@@ -136,6 +188,7 @@ function creationGrid(containerGrid, boom, n_cel, squareArrayNotBoom) {
                     }
                 }
                 document.getElementById('card-result').innerText = `Mi dispiace, hai perso, il tuo punteggio è: ${squareArrayNotBoom.length}`;
+                document.getElementById('card-hint').innerText = ``;
             }
 
             else {
@@ -143,8 +196,7 @@ function creationGrid(containerGrid, boom, n_cel, squareArrayNotBoom) {
                 squareArrayNotBoom.push(Number(this.innerHTML));
 
                 //PROVA: TROVA I QUADRATI VICINI NON BOMBA
-                let nearNotBombSquares = getPosNotBombs(boom, n_cel, this, squareArrayNotBoom);
-                console.log(nearNotBombSquares);
+                printHint(boom, n_cel, this, squareArrayNotBoom);
 
                 // aggiungere il background azzurro e il fiore quando clicco sul quadrato NON bomba
                 this.classList.add('lightblue');
@@ -157,6 +209,7 @@ function creationGrid(containerGrid, boom, n_cel, squareArrayNotBoom) {
                         squareArray[i].classList.add('pointer-event-none');
                     }
                     document.getElementById('card-result').innerText = `Congratulazioni, hai evitato tutte le bombe!`;
+                    document.getElementById('card-hint').innerText = ``;
                 }              
             }
         },{once: `true`})
@@ -177,6 +230,7 @@ button_play.addEventListener('click', function(){
     // cancella l'eventuale tabella già creata
     let containerSquare = document.getElementById('container-div');
     containerSquare.innerHTML = "";
+    document.getElementById('card-hint').innerText = ``;
     document.getElementById('card-result').innerText = ``;
 
     // dichiaro alcune variabili fuori dallo switch
